@@ -23,7 +23,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
             <MessageSquare size={32} />
           </div>
-          <CardTitle>Bienvenido a Bolt Chat</CardTitle>
+          <CardTitle>Bienvenido a chischat</CardTitle>
           <CardDescription>Ingresa tu nombre para comenzar a chatear</CardDescription>
         </CardHeader>
         <CardContent>
