@@ -19,11 +19,28 @@ jobs:
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /var/www/html
-          sudo git pull origin main
-          # Copiar archivos a los directorios de Nginx
-          sudo cp -r sitio1/dist/* /var/www/html/sitio1/dist/
-          sudo cp sitio2/index.html /var/www/html/sitio2/
-          sudo cp sitio3/index.html /var/www/html/sitio3/
-          sudo cp sitio4/index.html /var/www/html/sitio4/
+          # Navegar al directorio del proyecto
+          cd /home/ec2-user/proyecto-sor-2025-
+          
+          # Actualizar código desde GitHub
+          sudo git fetch origin
+          sudo git reset --hard origin/main
+          
+          # Configurar Sitio 1 (Node.js con PM2)
+          cd sitio1
+          sudo npm install
+          
+          # Reiniciar aplicación con PM2
+          sudo pm2 stop sitio1-chat || true
+          sudo pm2 delete sitio1-chat || true
+          sudo pm2 start server.js --name sitio1-chat
+          sudo pm2 save
+          sudo pm2 startup
+          
+          # Los sitios 2, 3 y 4 son estáticos - Nginx ya sirve estos directorios directamente
+          
+          # Recargar Nginx
+          sudo nginx -t
           sudo systemctl reload nginx
+          
+          echo "Despliegue completado exitosamente"

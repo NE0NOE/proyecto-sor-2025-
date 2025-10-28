@@ -1,0 +1,95 @@
+
+### Configuración de Servicios
+
+#### Nginx Configuration
+```nginx
+# Archivo: /etc/nginx/conf.d/proyectos.conf
+# Configuración para los 4 sitios en puertos diferentes
+```
+
+#### PM2 Configuration
+```json
+{
+  "name": "sitio1-chat",
+  "script": "server.js",
+  "instances": 1,
+  "autorestart": true
+}
+```
+
+### Despliegue y CI/CD
+
+#### GitHub Actions Workflow
+- **Trigger**: Push a rama main
+- **Acciones**: 
+  - SSH al EC2
+  - Pull del código
+  - Instalación de dependencias
+  - Reinicio de PM2
+  - Recarga de Nginx
+
+#### Comandos de Despliegue Manual
+```bash
+# Actualizar código
+git pull origin main
+
+# Instalar dependencias
+cd sitio1 && npm install
+
+# Reiniciar aplicación
+pm2 restart sitio1-chat
+
+# Recargar Nginx
+sudo systemctl reload nginx
+```
+
+### Monitoreo y Logs
+
+#### Comandos de Verificación
+```bash
+# Estado de PM2
+pm2 status
+
+# Logs de aplicación
+pm2 logs sitio1-chat
+
+# Estado de Nginx
+sudo systemctl status nginx
+
+# Verificación de puertos
+sudo netstat -tulpn | grep -E ':(81|82|83|84|3000)'
+```
+
+#### Archivos de Log
+- **PM2**: `~/.pm2/logs/`
+- **Nginx**: `/var/log/nginx/`
+- **Systemd**: `journalctl -u nginx`
+
+### Seguridad
+
+#### Firewall Configuration
+```bash
+# Puertos abiertos
+sudo firewall-cmd --permanent --add-port=81/tcp
+sudo firewall-cmd --permanent --add-port=82/tcp
+sudo firewall-cmd --permanent --add-port=83/tcp
+sudo firewall-cmd --permanent --add-port=84/tcp
+sudo firewall-cmd --reload
+```
+
+#### Consideraciones de Seguridad
+- Los puertos >1024 no requieren privilegios de root
+- Nginx actúa como proxy inverso para aislar la aplicación
+- PM2 gestiona el ciclo de vida del proceso Node.js
+
+### Resolución de Problemas Comunes
+
+#### Error 502 Bad Gateway
+- Verificar que la aplicación Node.js esté ejecutándose en puerto 3000
+- Confirmar que PM2 tenga el proceso activo
+- Revisar logs de Nginx y PM2
+
+#### Permisos de Puerto
+- Puertos <1024 requieren sudo
+- La aplicación debe usar puerto 3000 para usuarios normales
+- Nginx redirige tráfico desde puertos 81-84
