@@ -1,120 +1,114 @@
-import http from 'http';
 import express from 'express';
+import { createServer } from 'http';
 import { Server } from 'socket.io';
-import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-app.use(cors());
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
 });
 
-const ADMIN_PASSWORD = 'password123';
+// Almacenamiento en memoria (se borra cuando el servidor se reinicia)
+let activeUsers = new Map();
+let messages = [];
 
-// In-memory data store
-let chatRooms = {
-  'General': { users: new Set(), messages: [] },
-  'Technology': { users: new Set(), messages: [] },
-  'Random': { users: new Set(), messages: [] },
-};
+app.use(express.static(join(__dirname, 'public')));
+
+// Ruta principal
+app.get('/', (req, res) => {
+  res.sendFile(join(__dirname, 'public', 'index.html'));
+});
+
+// Health check para AWS
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    activeUsers: activeUsers.size,
+    messageCount: messages.length,
+    timestamp: new Date().toISOString()
+  });
+});
 
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+  console.log('Usuario conectado:', socket.id);
 
-  const emitRooms = () => {
-    const roomData = Object.fromEntries(
-      Object.entries(chatRooms).map(([name, room]) => [name, { userCount: room.users.size }])
-    );
-    io.emit('updateRooms', roomData);
-  };
-
-  // Send initial room list
-  emitRooms();
-
-  socket.on('joinRoom', ({ room, username }) => {
-    if (!chatRooms[room]) return;
-
-    // Leave previous rooms
-    for (const r in chatRooms) {
-      if (chatRooms[r].users.has(username)) {
-        chatRooms[r].users.delete(username);
-        socket.leave(r);
-        io.to(r).emit('updateUsers', Array.from(chatRooms[r].users));
-      }
-    }
+  socket.on('join-chat', (userData) => {
+    const { username } = userData;
     
-    socket.join(room);
-    chatRooms[room].users.add(username);
-
-    console.log(`${username} (${socket.id}) joined room: ${room}`);
-
-    // Send message history
-    socket.emit('messageHistory', chatRooms[room].messages);
-    // Update user list for the room
-    io.to(room).emit('updateUsers', Array.from(chatRooms[room].users));
-    emitRooms();
-  });
-
-  socket.on('sendMessage', ({ room, message, username }) => {
-    if (!chatRooms[room]) return;
-
-    const messageData = {
+    // Guardar usuario
+    activeUsers.set(socket.id, {
+      id: socket.id,
       username,
-      message,
-      timestamp: new Date().toISOString(),
+      joinedAt: new Date()
+    });
+
+    // Enviar mensajes existentes al nuevo usuario
+    socket.emit('chat-history', messages);
+    
+    // Notificar a todos que un usuario se unió
+    io.emit('user-joined', {
+      username,
+      activeUsers: Array.from(activeUsers.values())
+    });
+
+    console.log(`${username} se unió al chat. Usuarios activos: ${activeUsers.size}`);
+  });
+
+  socket.on('send-message', (messageData) => {
+    const user = activeUsers.get(socket.id);
+    if (!user) return;
+
+    const message = {
+      id: Date.now().toString(),
+      username: user.username,
+      text: messageData.text,
+      timestamp: new Date(),
+      userId: socket.id
     };
-    chatRooms[room].messages.push(messageData);
-    // Keep only the last 100 messages
-    if (chatRooms[room].messages.length > 100) {
-      chatRooms[room].messages.shift();
-    }
-    io.to(room).emit('receiveMessage', messageData);
-  });
 
-  socket.on('adminLogin', (password) => {
-    if (password === ADMIN_PASSWORD) {
-      socket.emit('adminAuth', { success: true });
-    } else {
-      socket.emit('adminAuth', { success: false });
-    }
-  });
-
-  socket.on('createRoom', ({ roomName, password }) => {
-    if (password !== ADMIN_PASSWORD) return;
-    if (!chatRooms[roomName]) {
-      chatRooms[roomName] = { users: new Set(), messages: [] };
-      console.log(`Admin created room: ${roomName}`);
-      emitRooms();
-    }
-  });
-  
-  socket.on('deleteRoom', ({ roomName, password }) => {
-    if (password !== ADMIN_PASSWORD) return;
-    if (chatRooms[roomName]) {
-      delete chatRooms[roomName];
-      io.emit('roomDeleted', roomName);
-      console.log(`Admin deleted room: ${roomName}`);
-      emitRooms();
-    }
-  });
-
-  socket.on('disconnecting', () => {
-    for (const room of socket.rooms) {
-      if (chatRooms[room]) {
-        // This is tricky as we don't have the username on disconnect
-        // A better approach would be mapping socket.id to username
-      }
-    }
+    messages.push(message);
+    
+    // Enviar mensaje a todos los usuarios
+    io.emit('new-message', message);
   });
 
   socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
+    const user = activeUsers.get(socket.id);
+    
+    if (user) {
+      activeUsers.delete(socket.id);
+      
+      // Si no hay usuarios activos, borrar todos los mensajes
+      if (activeUsers.size === 0) {
+        messages = [];
+        console.log('Todos los usuarios salieron. Mensajes borrados.');
+      } else {
+        // Notificar que un usuario salió
+        io.emit('user-left', {
+          username: user.username,
+          activeUsers: Array.from(activeUsers.values())
+        });
+      }
+    }
+
+    console.log('Usuario desconectado:', socket.id);
+    console.log('Usuarios activos restantes:', activeUsers.size);
   });
 });
 
 const PORT = process.env.PORT || 81;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const HOST = process.env.HOST || '0.0.0.0';
+
+server.listen(PORT, HOST, () => {
+  console.log(`🚀 Servidor ejecutándose en http://${HOST}:${PORT}`);
+  console.log(`📱 Accesible desde: http://3.23.96.43:81`);
+  console.log(`🏥 Health check disponible en: http://3.23.96.43:81/health`);
+});

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro de Chat en Tiempo Real</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Pantalla de inicio -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="login-header">
+                    <h1>💬 Foro de Chat</h1>
+                    <p>Ingresa tu nombre y comienza a conversar</p>
+                </div>
+                <div class="login-form">
+                    <input 
+                        type="text" 
+                        id="username-input" 
+                        placeholder="Tu nombre..." 
+                        maxlength="20"
+                    >
+                    <button id="join-chat-btn" class="btn-primary">
+                        Unirse al Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pantalla del chat -->
+        <div id="chat-screen" class="screen">
+            <div class="chat-container">
+                <header class="chat-header">
+                    <div class="header-info">
+                        <h2>💬 Foro de Chat</h2>
+                        <div class="user-status">
+                            <span id="active-users-count">1 usuario activo</span>
+                        </div>
+                    </div>
+                    <button id="leave-chat-btn" class="btn-secondary">
+                        Salir
+                    </button>
+                </header>
+
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Mensajes se cargan aquí -->
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="message-input" 
+                            placeholder="Escribe tu mensaje..." 
+                            maxlength="500"
+                        >
+                        <button id="send-message-btn" class="btn-send">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
