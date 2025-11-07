@@ -1,0 +1,90 @@
+:root{
+  --yellow:#ffcc00;
+  --yellow-2:#ffd633;
+  --bg:#0b0b0b;
+  --card:#1b1b1b;
+  --muted:#dcdcdc;
+}
+
+*{box-sizing:border-box}
+body{margin:0;font-family:"Poppins",sans-serif;background:var(--bg);color:var(--muted);line-height:1.6}
+
+/* HEADER */
+header{background:var(--yellow);color:#111;text-align:center;padding:2rem;text-transform:uppercase;letter-spacing:1px}
+header h1{margin:0;font-size:2.5rem}
+header p{margin-top:.5rem;color:#111;font-weight:600}
+
+/* INTRO */
+.intro{max-width:700px;margin:2rem auto;background:var(--card);padding:1.5rem;border-left:6px solid var(--yellow);border-radius:8px;text-align:center}
+
+/* CALCULADORA */
+.calculator{max-width:500px;margin:2rem auto;padding:1.5rem;background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.4)}
+.calc-grid{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+.input-group{flex:1;min-width:140px;position:relative}
+.input-group label{display:block;margin-bottom:.4rem;font-weight:600;color:#f1f1f1}
+.input-group input{width:100%;padding:.6rem;border-radius:8px;border:1px solid #333;background:#0e0e0e;color:var(--muted)}
+.input-group small{position:absolute;right:8px;bottom:10px;color:#999}
+.units{margin-top:.4rem;display:flex;gap:.5rem}
+.units label{font-size:.9rem;color:#ddd;display:flex;align-items:center;gap:.35rem}
+.units input{accent-color:var(--yellow)}
+
+.calc-actions{margin-top:1rem;display:flex;gap:.6rem}
+.btn{padding:.6rem 1rem;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--yellow);color:#111}
+.btn.ghost{background:transparent;border:1px solid #333;color:var(--muted)}
+
+.result{margin-top:1rem;padding:.8rem;border-radius:8px;background:#0f0f0f;border-left:4px solid var(--yellow);color:var(--yellow-2);font-weight:700;min-height:48px}
+
+.input-group small{position:absolute;right:8px;bottom:10px;color:#999}
+
+.units{margin-top:.4rem;display:flex;gap:.6rem}
+.units label{font-size:.9rem;color:#ddd;display:flex;align-items:center;gap:.35rem}
+.units input{accent-color:var(--yellow)}
+
+.calc-actions{margin-top:1rem;display:flex;gap:.6rem;align-items:center}
+.btn{padding:.6rem .9rem;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--yellow);color:#111}
+.btn.ghost{background:transparent;border:1px solid #333;color:var(--muted)}
+
+/* RESULTADO */
+.result{margin-top:1rem;padding:.8rem;border-radius:8px;background:#0f0f0f;border-left:4px solid var(--yellow);color:var(--yellow-2);font-weight:700;min-height:48px}
+
+/* RUTINAS */
+.workouts{margin:2rem 0;padding:1rem;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,0,0.02) 0%, transparent 100%)}
+.workouts h2{text-align:center;color:var(--yellow);margin-bottom:.2rem}
+.workouts .sub{text-align:center;color:#cfcfcf;margin-bottom:1rem}
+
+/* LEVELS GRID */
+.levels{display:grid;grid-template-columns:repeat(1,1fr);gap:1.2rem}
+@media(min-width:900px){.levels{grid-template-columns:repeat(3,1fr)}}
+
+.level{background:var(--card);border-radius:12px;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
+.level img{width:100%;height:180px;object-fit:cover;display:block}
+.level-body{padding:1rem}
+.level h3{margin:0;color:var(--yellow);text-transform:uppercase;font-size:1rem;letter-spacing:0.6px}
+.level .desc{color:#dcdcdc;margin:.4rem 0 1rem}
+
+/* ROUTES */
+.routes{display:flex;flex-direction:column;gap:.9rem}
+@media(min-width:720px){.routes{flex-direction:row}}
+.route{background:#0e0e0e;padding:.9rem;border-radius:8px;color:#e7e7e7;flex:1;border:1px solid rgba(255,255,255,0.03)}
+.route h4{margin:0 0 .5rem;color:var(--yellow);font-size:.95rem}
+.route ul{margin:0;padding-left:1.1rem;color:#d6d6d6}
+
+
+/* STAGES CARDS */
+.stages{margin:2rem 0}
+.cards{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.card{background:var(--card);padding:1rem;border-radius:10px;min-width:180px;text-align:center;border-left:6px solid var(--yellow)}
+
+/* FOOTER */
+footer{margin-top:2rem;text-align:center;padding:1rem;color:var(--yellow);font-weight:700}
+.bmi-bar{position:relative;height:20px;margin-top:1rem;border-radius:10px;background:#222;overflow:hidden}
+.bmi-scale{display:flex;height:100%;width:100%}
+.bmi-range{height:100%}
+
+.bmi-range.low{flex:18.5;background:#5dade2}      /* Bajo peso */
+.bmi-range.healthy{flex:6.4;background:#2ecc71}   /* 18.5–24.9 Peso saludable */
+.bmi-range.overweight{flex:5.1;background:#f39c12}/* 25–29.9 Sobrepeso */
+.bmi-range.obese{flex:10;background:#e74c3c}       /* 30–40 Obesidad */
+.bmi-marker{position:absolute;top:-2px;width:4px;height:24px;background:#ffcc00;border-radius:2px;}

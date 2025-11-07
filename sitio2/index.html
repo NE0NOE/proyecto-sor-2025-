@@ -1,38 +1,195 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitio 2</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activa Tu Cuerpo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Sitio 2</h1>
-        <p>Este sitio se encuentra en construcción</p>
-    </div>
+  <header>
+    <h1>ACTIVA TU CUERPO</h1>
+    <p>De casa al gimnasio — paso a paso</p>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Comienza con pequeños pasos</h2>
+      <p>No es necesario hacer ejercicio todos los días; con que hagas ejercicios de cualquier tipo al menos una vez a la semana, pero lo ideal es que lo hagas 3 veces a la semana.</p>
+    </section>
+
+    <section class="calculator">
+      <h2>Calcula tu peso ideal</h2>
+      <p>Introduce tu edad, altura y peso. La calculadora mostrará tu IMC y recomendaciones según tu edad.</p>
+
+      <div class="calc-grid">
+        <div class="input-group">
+          <label for="age">Edad</label>
+          <input type="number" id="age" placeholder="Ej. 25" min="1" max="120">
+        </div>
+
+        <div class="input-group">
+          <label for="height">Altura</label>
+          <input type="number" id="height" placeholder="Ej. 175" min="50" max="250">
+          <small>cm</small>
+        </div>
+
+        <div class="input-group">
+          <label for="weight">Peso</label>
+          <input type="number" id="weight" placeholder="Ej. 70" min="10" max="300">
+          <div class="units">
+            <label><input type="radio" name="unit" value="kg" checked> kg</label>
+            <label><input type="radio" name="unit" value="lbs"> lbs</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-actions">
+        <button id="calcBtn" class="btn primary">Calcular IMC</button>
+        <button id="resetBtn" class="btn ghost">Borrar</button>
+      </div>
+
+      <div id="resultBox" class="result"></div>
+    </section>
+
+      <!-- RUTINAS / EJERCICIOS -->
+    <section class="workouts">
+      <h2>Rutinas de Ejercicio</h2>
+      <p class="sub">Elige tu nivel y sigue una de las rutas semanales recomendadas.</p>
+
+      <div class="levels">
+
+        <!-- LIGEROS -->
+        <article class="level light">
+          <img src="https://images.pexels.com/photos/4498603/pexels-photo-4498603.jpeg" alt="Ejercicios ligeros" />
+          <div class="level-body">
+            <h3>🟢 Ejercicios Ligeros — Para empezar</h3>
+            <p class="desc">Perfectos para principiantes o quienes retoman la actividad física.</p>
+
+            <div class="routes">
+              <div class="route">
+                <h4>Ruta 1: Ejercicios ligeros para empezar</h4>
+                <ul>
+                  <li>Día 1: Calentamiento + 10 sentadillas + 5 flexiones + estiramientos.</li>
+                  <li>Día 3: 15 minutos de caminata o trote suave.</li>
+                  <li>Día 5: 20 abdominales + 30 segundos de plancha.</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 2: Movimiento diario</h4>
+                <ul>
+                  <li>Día 1: Saltos suaves + sentadillas + brazos libres (5 min total).</li>
+                  <li>Día 3: Caminata rápida 20 min.</li>
+                  <li>Día 5: Estiramientos y respiración (10 min).</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 3: Despierta tu energía</h4>
+                <ul>
+                  <li>Día 1: Jumping jacks 1 min + sentadillas 10 rep.</li>
+                  <li>Día 3: Planchas cortas (20 seg) + descanso activo.</li>
+                  <li>Día 5: Caminata ligera + flexiones 5 rep.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- INTERMEDIOS -->
+        <article class="level medium">
+          <img src="https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg" alt="Ejercicios intermedios" />
+          <div class="level-body">
+            <h3>🟡 Ejercicios Intermedios</h3>
+            <p class="desc">Aumenta la intensidad y duración si ya tienes experiencia.</p>
+
+            <div class="routes">
+              <div class="route">
+                <h4>Ruta 1: Fuerza y control</h4>
+                <ul>
+                  <li>Día 1: 3 series de 15 sentadillas + 10 flexiones.</li>
+                  <li>Día 3: 20 min de trote + 1 min plancha.</li>
+                  <li>Día 5: Abdominales 3x20 + estiramiento final.</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 2: Cuerpo activo</h4>
+                <ul>
+                  <li>Día 1: Calentamiento + rutina HIIT ligera (10 min).</li>
+                  <li>Día 3: Caminata rápida 25 min.</li>
+                  <li>Día 5: Flexiones + planchas alternas.</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 3: Progreso constante</h4>
+                <ul>
+                  <li>Día 1: 4 rondas de 10 burpees + 20 sentadillas.</li>
+                  <li>Día 3: 25 min cardio.</li>
+                  <li>Día 5: Abdominales + trabajo de core.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PESADOS -->
+        <article class="level hard">
+          <img src="https://images.pexels.com/photos/2261485/pexels-photo-2261485.jpeg" alt="Ejercicios pesados" />
+          <div class="level-body">
+            <h3>🔴 Ejercicios Pesados</h3>
+            <p class="desc">Para quienes buscan fuerza, resistencia y rendimiento.</p>
+
+            <div class="routes">
+              <div class="route">
+                <h4>Ruta 1: Desafío total</h4>
+                <ul>
+                  <li>Día 1: 5 rondas de 20 burpees + 30 sentadillas + 10 dominadas.</li>
+                  <li>Día 3: 30 min de cardio intenso.</li>
+                  <li>Día 5: Core avanzado + planchas 2 min.</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 2: Potencia y energía</h4>
+                <ul>
+                  <li>Día 1: 4 rondas de 15 flexiones + 15 saltos + 20 abdominales.</li>
+                  <li>Día 3: HIIT 20 min + estiramiento.</li>
+                  <li>Día 5: 30 min de carrera + fuerza con peso corporal.</li>
+                </ul>
+              </div>
+
+              <div class="route">
+                <h4>Ruta 3: Avanzado extremo</h4>
+                <ul>
+                  <li>Día 1: 40 min full body (pesas o resistencia).</li>
+                  <li>Día 3: Entrenamiento funcional.</li>
+                  <li>Día 5: 5 km carrera + flexiones + planchas.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="stages">
+      <h2>Etapas del progreso</h2>
+      <div class="cards">
+        <div class="card"> <h4>🏠 En casa</h4> <p>Rutinas rápidas (5–15 min) para crear hábito.</p> </div>
+        <div class="card"> <h4>🌳 Al aire libre</h4> <p>Parques y escaleras: cardio y fuerza funcional.</p> </div>
+        <div class="card"> <h4>🏋️ En el gimnasio</h4> <p>Entrenamiento con máquinas y pesas para progresar.</p> </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Activa Tu Cuerpo — Tu camino al bienestar</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
