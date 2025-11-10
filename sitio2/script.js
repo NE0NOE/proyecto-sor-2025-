@@ -58,17 +58,7 @@ calcBtn.addEventListener('click', ()=>{
     const maxLbs = maxIdeal/0.45359237;
     html+=`<div style="margin-top:.4rem;font-size:.9rem;color:#ddd">En tus unidades: rango ideal ≈ <strong>${format(minLbs)} lbs</strong> — <strong>${format(maxLbs)} lbs</strong></div>`;
   }
-html += `
-<div class="bmi-bar">
-  <div class="bmi-scale">
-    <div class="bmi-range low"></div>
-    <div class="bmi-range healthy"></div>
-    <div class="bmi-range overweight"></div>
-    <div class="bmi-range obese"></div>
-  </div>
-  <div class="bmi-marker" style="left:${bmiPercent}%"></div>
-</div>
-`;
+
   resultBox.innerHTML=html;
 });
 let html = `<div>Edad: <strong>${age} años</strong></div>`;
@@ -86,3 +76,14 @@ resetBtn.addEventListener('click',()=>{
   resultBox.innerHTML='';
   q('input[name="unit"][value="kg"]').checked=true;
 });
+html += `
+<div class="bmi-bar">
+  <div class="bmi-scale">
+    <div class="bmi-range low"></div>
+    <div class="bmi-range healthy"></div>
+    <div class="bmi-range overweight"></div>
+    <div class="bmi-range obese"></div>
+  </div>
+  <div class="bmi-marker" style="left:${bmiPercent}%"></div>
+</div>
+`;
