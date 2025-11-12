@@ -1,38 +1,99 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html PUBLIC>
+<!--- HTML INDEX--->
+<!--- Encabezado y Exportaciones --->
+<!---Importacion de recursos a utilizar en el HTML--->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitio 3</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 8px;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Game Survive</title>
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <script src="js/game.js" type="text/javascript"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Sitio 3</h1>
-        <p>Este sitio se encuentra en construcción</p>
+
+<!---LLamada de funcion para ejecutar el juego en Game.js--->
+<body onload="game.init()">
+
+    <!---Modelado de la vista de todos los Widgets a mostrar en la pantalla--->
+    <div class="contenedor">
+
+        <!---Lado Izquierdo de la pantalla--->
+        <div class="izquierda">
+
+            <!---Instrucción de los controles--->
+            <ul class="lista">
+                <li class="titulo">CONTROLES:</li>
+                <li class="izquierda">IZQUIERDA</li>
+                <li class="derecha">DERECHA</li>
+                <li class="espacio">DISPARAR</li>
+            </ul>
+
+            <!---Texto que indica que es un programa creado en base a un proyecto de la UNI--->
+            <ul class="lista">
+                <li class="titulo">UNIVERSIDAD NACIONAL DE INGENIERIA</li>
+                
+                <li class="logo_uni"></li>
+            </ul>
+
+            <!---Descripcion del Curso--->
+            <ul class="text_description">
+                <ul class="text_curso_tit">
+                    <li class="titulo">Asignatura:</li>
+                </ul>
+
+                <ul class="text_curso_con">
+                    <li class="titulo">- Sistemas Operativos</li>
+                </ul>
+                    
+                <ul class="text_curso_tit">
+                    <li class="titulo">Docente:</li>
+                </ul>
+
+                <ul class="text_curso_con">
+                    <li class="titulo">- Ing. Danny Oswaldo Chávez Miranda</li>
+                </ul>
+
+                <ul class="text_curso_tit">
+                    <li class="titulo">Año de Curso:</li>
+                </ul>
+
+                <ul class="text_curso_con">
+                    <li class="titulo">- 3er Año</li>
+                </ul>
+
+            </ul>
+
+        </div>
+
+        <!---Lado Derecho de la pantalla--->
+        <div class="derecha">
+            <h3 class="tituloPuntuaciones">MEJORES PUNTUACIONES</h3>
+            <ul id="puntuaciones"></ul>
+        </div>
+
+        <!---Advertencia a utilizar si el browser no ejecuta el juego o tiene problemas al momento de su compilación--->
+        <div class="juego">
+            <canvas id="canvas" width="600" height="650">TU NAVEGADOR NO SOPORTA HTML5!</canvas>
+        </div>
+
     </div>
+
 </body>
+
+ <!---Creditos a visualizar en la parte Inferior:--->
+<footer>
+    <!---Titulos:--->
+    
+    <!---Parche predeterminado:--->
+    <p>
+        Created by: <i class="fa fa-heart"></i>
+    </p>
+
+    <!---Nombre del creador:--->
+    <div class="text_creditos">
+        <p>
+            <a target="_blank">Bryan Alexander Cano (2021-0107U)</a>
+        </p>
+    </div>
+</footer>
+
+
 </html>

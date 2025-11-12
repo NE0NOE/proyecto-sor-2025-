@@ -1,0 +1,198 @@
+/*Cuerpo de la pagina*/
+body {
+    background: #06a7e6;
+    color: #000000;
+    font: 14px 'Arial',sans-serif;
+    text-align: center;
+}
+
+/*Texto de Prueba*/
+a {
+    color: #506e2f;
+    text-decoration: none;
+}
+a:hover {
+    color: #ff4500;
+}
+
+/*Dimensiones de los widgets a mostrar en la pantalla*/
+/*Nota: Estan definidos de izquierda a derecha en base al tamaño del container del juego*/
+div.contenedor {
+    width: 100%;
+    margin: 0 auto;
+}
+div.izquierda, div.derecha {
+    width: 300px;
+}
+div.izquierda {
+    float: left;
+    text-align: left;
+}
+
+/*Texto y Dimensiones del juego*/
+div.juego canvas {
+    box-shadow: 0 0 30px #000000;
+}
+div.derecha {
+    float: right;
+}
+
+/*Tabla de Puntuaciones*/
+div.derecha h3.tituloPuntuaciones {
+    background: url("../images/medalla.png") no-repeat left;
+    padding: 10px;
+}
+div.derecha ul#puntuaciones {
+    width: 300px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+div.derecha ul#puntuaciones li{
+    line-height:1.5em;
+    border-bottom:1px solid #aaa;
+    float:left;
+    display:inline;
+    width: 50%;
+    padding: 10px 0;
+}
+.negrita {
+    font-weight: bold;
+}
+
+/*Texto de la descripcion del Curso*/
+
+ul.text_description {
+    margin: 25px 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+ul.text_description li {
+    padding: 10px 0;
+}
+
+.text_curso_tit{
+	background: linear-gradient(
+		to right,
+		#cd5353 20%,
+		#e1fa00 30%,
+		#b9cd01 70%,
+		#da4a4a 80%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-emphasis-color: transparent;
+	background-size: 500% auto;
+	animation: textShine 5s ease-in-out infinite alternate;
+}
+.text_curso_con{
+	font-size: 15px;
+	background: linear-gradient(
+		to right,
+		#f1f1f1 20%,
+		#0011ff 30%,
+		#0011ff 70%,
+		#f1f1f1 80%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-emphasis-color: transparent;
+	background-size: 500% auto;
+	animation: textShine 5s ease-in-out infinite alternate;
+}
+
+/*Texto del created by*/
+footer {
+    background-color: #222;
+	color: #fff;
+    font-size: 14px;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+}
+.text_creditos{
+	background: linear-gradient(
+		to right,
+		#7953cd 20%,
+		#00affa 30%,
+		#0190cd 70%,
+		#764ada 80%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-emphasis-color: transparent;
+	background-size: 500% auto;
+	animation: textShine 5s ease-in-out infinite alternate;
+}
+
+/*
+Cosas a mostrar en la parte superior izquierda:
+- Textos de las intrucciones
+- Dimension y exportacion de imagenes
+- Espaciado con respecto a la pantalla
+*/
+
+/*Controles*/
+ul.lista {
+    margin: 25px 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+ul.lista li.izquierda {
+    background: url("../images/izquierda.png") no-repeat left;
+}
+ul.lista li.derecha {
+    background: url("../images/derecha.png") no-repeat left;
+}
+ul.lista li.espacio {
+    background: url("../images/space.gif") no-repeat left;
+    background-size: 35px;
+}
+
+/*Logo UNI*/
+ul.lista_logo {
+    margin: 25px 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+ul.lista li.logo_uni {
+    padding: 93px 0;
+    background: url("../images/logo_uni.png");
+    background-size: 300px;
+}
+
+/*Dimensiones*/
+ul.lista li {
+    padding: 10px 0;
+}
+ul.lista li.logo_uni, ul.lista li.izquierda, ul.lista li.derecha, ul.lista li.espacio {
+    padding-left: 40px;
+}
+
+/*Formato de Texto*/
+ul.lista li.titulo {
+    font-weight: bold;
+}
+
+ul.text_description li.titulo {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+@keyframes textShine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
