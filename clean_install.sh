@@ -78,12 +78,27 @@ cd "$BASE_DIR/sitio1"
 npm install
 pm2 start server.js --name sitio1
 
-# Sitio 4 (Cine - Puerto 3000)
-echo "Configurando Sitio 4..."
-cd "$BASE_DIR/sitio4"
-npm install
-# Nota: Sitio 4 requiere base de datos. Asegúrate de configurar .env
-pm2 start server.js --name sitio4
+# Sitio 4 (Cine Estático - Puerto 3000)
+echo "Configurando Sitio 4 (Versión Estática)..."
+
+# Crear config Nginx para Sitio 4
+cat > /etc/nginx/sites-available/sitio4 <<EOF
+server {
+    listen 3000;
+    server_name _;
+    root $BASE_DIR/sitio4_static;
+    index index.html;
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# Habilitar sitio 4
+ln -s /etc/nginx/sites-available/sitio4 /etc/nginx/sites-enabled/
+
+# Reiniciar Nginx para aplicar cambios
+systemctl restart nginx
 
 # Guardar lista de procesos PM2
 pm2 save
