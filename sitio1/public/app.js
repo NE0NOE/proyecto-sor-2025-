@@ -1,4 +1,4 @@
-const socket = io('http://3.23.96.43:81');
+const socket = io('http://3.22.114.65:81');
 
 // Elementos del DOM
 const loginScreen = document.getElementById('login-screen');
@@ -21,26 +21,26 @@ usernameInput.addEventListener('keypress', (e) => {
 
 function joinChat() {
   const username = usernameInput.value.trim();
-  
+
   if (!username) {
     alert('Por favor ingresa tu nombre');
     return;
   }
-  
+
   if (username.length > 20) {
     alert('El nombre no puede tener más de 20 caracteres');
     return;
   }
-  
+
   currentUser = username;
-  
+
   // Cambiar a pantalla de chat
   loginScreen.classList.remove('active');
   chatScreen.classList.add('active');
-  
+
   // Conectar al socket
   socket.emit('join-chat', { username });
-  
+
   // Enfocar el input de mensajes
   messageInput.focus();
 }
@@ -59,14 +59,14 @@ messageInput.addEventListener('keypress', (e) => {
 
 function sendMessage() {
   const text = messageInput.value.trim();
-  
+
   if (!text) return;
-  
+
   if (text.length > 500) {
     alert('El mensaje no puede tener más de 500 caracteres');
     return;
   }
-  
+
   socket.emit('send-message', { text });
   messageInput.value = '';
 }
@@ -101,12 +101,12 @@ socket.on('user-left', (data) => {
 function addMessageToChat(message) {
   const messageElement = document.createElement('div');
   messageElement.className = `message ${message.userId === socket.id ? 'own' : 'other'}`;
-  
+
   const time = new Date(message.timestamp).toLocaleTimeString('es-ES', {
     hour: '2-digit',
     minute: '2-digit'
   });
-  
+
   messageElement.innerHTML = `
     <div class="message-header">
       <span class="message-username">${message.username}</span>
@@ -114,7 +114,7 @@ function addMessageToChat(message) {
     </div>
     <div class="message-text">${escapeHtml(message.text)}</div>
   `;
-  
+
   chatMessages.appendChild(messageElement);
   scrollToBottom();
 }
@@ -123,7 +123,7 @@ function addSystemMessage(text) {
   const systemElement = document.createElement('div');
   systemElement.className = 'message system-message';
   systemElement.textContent = text;
-  
+
   chatMessages.appendChild(systemElement);
   scrollToBottom();
 }

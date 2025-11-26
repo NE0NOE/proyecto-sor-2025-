@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
 
   socket.on('join-chat', (userData) => {
     const { username } = userData;
-    
+
     // Guardar usuario
     activeUsers.set(socket.id, {
       id: socket.id,
@@ -52,7 +52,7 @@ io.on('connection', (socket) => {
 
     // Enviar mensajes existentes al nuevo usuario
     socket.emit('chat-history', messages);
-    
+
     // Notificar a todos que un usuario se unió
     io.emit('user-joined', {
       username,
@@ -75,17 +75,17 @@ io.on('connection', (socket) => {
     };
 
     messages.push(message);
-    
+
     // Enviar mensaje a todos los usuarios
     io.emit('new-message', message);
   });
 
   socket.on('disconnect', () => {
     const user = activeUsers.get(socket.id);
-    
+
     if (user) {
       activeUsers.delete(socket.id);
-      
+
       // Si no hay usuarios activos, borrar todos los mensajes
       if (activeUsers.size === 0) {
         messages = [];
@@ -109,6 +109,6 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 server.listen(PORT, HOST, () => {
   console.log(`🚀 Servidor ejecutándose en http://${HOST}:${PORT}`);
-  console.log(`📱 Accesible desde: http://3.23.96.43:81`);
-  console.log(`🏥 Health check disponible en: http://3.23.96.43:81/health`);
+  console.log(`📱 Accesible desde: http://3.22.114.65:81`);
+  console.log(`🏥 Health check disponible en: http://3.22.114.65:81/health`);
 });
