@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Admin Cine</h2>
+
+        <ul>
+            <li id="linkPeliculas">🎬 Películas</li>
+            <li id="linkGaleria">🖼️ Galería</li>
+            <li id="linkReparto">🎭 Reparto</li>
+            <li id="linkComentarios">💬 Comentarios</li>
+        </ul>
+
+        <button id="btnLogout">Cerrar Sesión</button>
+    </div>
+
+    <div class="content">
+        <h1>Bienvenido, <span id="adminName">Administrador</span></h1>
+
+        <p class="welcome-text">
+            Selecciona una sección en el menú de la izquierda para comenzar a administrar el sistema.
+        </p>
+
+        <div id="contentArea" class="content-area">
+            <!-- Aquí se cargará contenido dinámico -->
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
