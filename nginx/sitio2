@@ -1,0 +1,11 @@
+server {
+    listen 82;
+    server_name _;
+
+    root /home/ubuntu/actions-runner/_work/proyecto-sor-2025-/proyecto-sor-2025-/sitio2;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
