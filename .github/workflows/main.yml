@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy to Ubuntu Self-Hosted
 
 on:
   push:
@@ -6,41 +6,32 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    
+    # IMPORTANTE: Esto le dice a GitHub que use TU servidor, no los de ellos.
+    runs-on: self-hosted
+
     steps:
+    # 1. Este paso descarga el código automáticamente en la carpeta _work
     - name: Checkout code
       uses: actions/checkout@v4
-      
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ec2-user
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          # Navegar al directorio del proyecto
-          cd /home/ec2-user/proyecto-sor-2025-
-          
-          # Actualizar código desde GitHub
-          sudo git fetch origin
-          sudo git reset --hard origin/main
-          
-          # Configurar Sitio 1 (Node.js con PM2)
-          cd sitio1
-          sudo npm install
-          
-          # Reiniciar aplicación con PM2
-          sudo pm2 stop sitio1-chat || true
-          sudo pm2 delete sitio1-chat || true
-          sudo pm2 start server.js --name sitio1-chat
-          sudo pm2 save
-          sudo pm2 startup
-          
-          # Los sitios 2, 3 y 4 son estáticos - Nginx ya sirve estos directorios directamente
-          
-          # Recargar Nginx
-          sudo nginx -t
-          sudo systemctl reload nginx
-          
-          echo "Despliegue completado exitosamente"
+
+    # 2. Instalar dependencias y reiniciar la app
+    - name: Install and Restart PM2
+      run: |
+        # Entramos a la carpeta del sitio (ajusta si tu carpeta se llama distinto)
+        cd sitio1
+        
+        # Instalar librerías nuevas si las hubiera
+        npm install
+        
+        # Reiniciar la aplicación
+        # Si la app ya existe, la reinicia. Si no, la inicia.
+        pm2 restart api-sor || PORT=3000 pm2 start server.js --name "api-sor"
+        
+        # Guardar estado para que inicie sola si se reinicia el servidor
+        pm2 save
+
+    # 3. Recargar Nginx (Opcional, solo si cambiaste configuración de Nginx)
+    - name: Reload Nginx
+      run: |
+        sudo nginx -t
+        sudo systemctl reload nginx
